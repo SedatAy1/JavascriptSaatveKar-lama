@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoş Geldiniz</title>
+    <style>
+        /* Genel yapı ve arka plan görseli */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background: url('https://picsum.photos/1600/900') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff; /* Varsayılan yazı rengi beyaz */
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.7); /* Koyu transparan katman */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            color: #ecf0f1;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #nameForm h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #e20ff1;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Saat ve tarih stilizasyonu */
+        #clock h2, #clock h3, #clock h4 {
+            margin: 5px 0;
+        }
+
+        #clock h2 {
+            font-size: 30px;
+            color: #ffae00;
+        }
+
+        #time {
+            font-size: 60px;
+            font-weight: bold;
+            color: #e67e22;
+        }
+
+        #date {
+            font-size: 28px;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="container">
+            <div id="nameForm">
+                <h1>Hoş Geldiniz!</h1>
+                <label for="username">İsminizi giriniz:</label>
+                <input type="text" id="username" placeholder="İsim">
+                <button onclick="submitName()">Gönder</button>
+            </div>
+
+            <div id="clock" style="display:none;">
+                <h2 id="greeting"></h2>
+                <h3 id="time"></h3>
+                <h4 id="date"></h4>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function submitName() {
+            const name = document.getElementById('username').value;
+            if (name) {
+                document.getElementById('nameForm').style.display = 'none';
+                document.getElementById('clock').style.display = 'block';
+                document.getElementById('greeting').textContent = `Merhaba, ${name}! Hoş geldin!`;
+                updateClock();
+                setInterval(updateClock, 1000); // Saati her saniye güncelle
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            const day = now.toLocaleDateString('tr-TR', { weekday: 'long' });
+            const date = now.toLocaleDateString('tr-TR');
+
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('date').textContent = `${date} ${day}`;
+        }
+    </script>
+</body>
+</html>
